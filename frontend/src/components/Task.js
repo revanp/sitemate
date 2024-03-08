@@ -18,13 +18,29 @@ const Task = () => {
         fetchTask();
     }, []);
 
+    const handleAddTask = async () => {
+        const newTask = {
+            title: 'New Task',
+            description: 'Description for the new task',
+        };
+    
+        try {
+            const addedTask = await taskService.addTask(newTask);
+            setTasks([...tasks, addedTask]);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    
+
     return (
         <div className="mt-5">
             <h2>Issue Management</h2>
-            <button className="btn btn-primary">Add Task</button>
 
-            <div className="mt-3 row">
-                <TaskList tasks={tasks}/>
+            <div className="mt-3">
+                {tasks.map((task) => (
+                    <TaskList task={task} />
+                ))}
             </div>
             {/* <h1>{task.title}</h1>
             <p>{task.description}</p> */}
